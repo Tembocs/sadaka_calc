@@ -7,7 +7,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Kokotoa Zaka',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -44,31 +44,36 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   double _userSadaka = 0;
   double _sadakaECT = 0;
   double _sadakaKanisani = 0;
+  final inputController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the Widget is disposed
+    inputController.dispose();
+    super.dispose();
+  }
 
   void _calculateSadakaPercent() {
     // This should be called after the calculate button is pressed
     setState(() {
-      // what if _userSadaka is 0?
+      _userSadaka = double.parse(inputController.text);
+      // what if _userSadaka is 0? Pop up alert dialog
       _sadakaECT = _userSadaka * 0.58;
       _sadakaKanisani = _userSadaka * 0.43;
     });
   }
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  // So that we have instant results as user types
+  @override
+  void initState() {
+    super.initState();
 
+    inputController.addListener(_calculateSadakaPercent);
+  }
+  
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -87,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: Padding(
-          padding: EdgeInsets.all(12.0),
+          padding: EdgeInsets.all(40.0),
         child: Column(
           // Column is also layout widget. It takes a list of children and
           // arranges them vertically. By default, it sizes itself to fit its
@@ -105,44 +110,38 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextFormField(
+            TextField(
               decoration: InputDecoration(
                 labelText: 'Kiasi cha sadaka:'
               ),
+              autofocus: true,
+              keyboardType: TextInputType.number,
+              controller: inputController,
             ),
-            
+
+            Spacer(flex: 1),
+
             Text('Sadaka ya Pomoja ECT (58%):'),
             Text(
               '$_sadakaECT',
               style: Theme.of(context).textTheme.display1,
             ),
 
+            Spacer(flex: 1),
             Text('Sadaka ya Pomoja Kanisani (58%):'),
             Text(
               '$_sadakaKanisani',
               style: Theme.of(context).textTheme.display1,
             ),
 
-            Text('You have pushed the button this many times:',),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
+            RaisedButton(
+              child: Text('Kokotoa'),
+              onPressed: _calculateSadakaPercent,
             ),
           ],
         ),
       ),
       ),
-
-      floatingActionButton: RaisedButton(
-        child: Text('Kokotoa'),
-        onPressed: _calculateSadakaPercent,
-      ),
-
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _incrementCounter,
-      //   tooltip: 'Increment',
-      //   child: Icon(Icons.add),
-      // ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
