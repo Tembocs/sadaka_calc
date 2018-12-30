@@ -19,7 +19,14 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
+        textTheme: TextTheme(
+          display1: TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+          ),
+        ),
       ),
+
       home: MyHomePage(title: 'Kokotoa Mgawanyo wa Sadaka'),
     );
   }
@@ -56,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
-  void _calculateSadakaPercent() {
+  void _calculateSadakaPercentage() {
     // This should be called after the calculate button is pressed
     setState(() {
       _userSadaka = double.parse(inputController.text);
@@ -66,14 +73,21 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _clearSadakaPercentage() {
+    // When we clear the input field this be called
+    setState(() {
+          _sadakaECT = 0;
+          _sadakaKanisani = 0;
+    });
+  }
   // So that we have instant results as user types
   @override
   void initState() {
     super.initState();
 
-    inputController.addListener(_calculateSadakaPercent);
+    inputController.addListener(_calculateSadakaPercentage);
   }
-  
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -110,34 +124,60 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text(
+              'Kiasi cha sadaka:',
+              style: Theme.of(context).textTheme.display1,
+            ),
+
             TextField(
+              style: Theme.of(context).textTheme.display1,
               decoration: InputDecoration(
-                labelText: 'Kiasi cha sadaka:'
+                //labelText: 'Kiasi cha sadaka:',
+                prefixText: 'Tsh. ',
+
+                // For clearing input field
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.clear),
+      
+                  onPressed: () {
+                    inputController.clear();
+                    _clearSadakaPercentage();
+                  },
+                )
               ),
               autofocus: true,
               keyboardType: TextInputType.number,
               controller: inputController,
             ),
 
-            Spacer(flex: 1),
+            // Spacer(flex: 1),
 
-            Text('Sadaka ya Pomoja ECT (58%):'),
+            Text(
+              'Sadaka ya Pomoja ECT (58%):',
+              style: Theme.of(context).textTheme.display1,
+            ),
+
             Text(
               '$_sadakaECT',
               style: Theme.of(context).textTheme.display1,
             ),
 
-            Spacer(flex: 1),
-            Text('Sadaka ya Pomoja Kanisani (58%):'),
+            // Spacer(flex: 1),
+            Text(
+              'Sadaka ya Pomoja Kanisani (58%):',
+              style: Theme.of(context).textTheme.display1,
+            ),
+
             Text(
               '$_sadakaKanisani',
               style: Theme.of(context).textTheme.display1,
             ),
 
-            RaisedButton(
-              child: Text('Kokotoa'),
-              onPressed: _calculateSadakaPercent,
-            ),
+            // With instant value changes this button is redundant.
+            // RaisedButton(
+            //   child: Text('Kokotoa'),
+            //   onPressed: _calculateSadakaPercentage,
+            // ),
           ],
         ),
       ),
