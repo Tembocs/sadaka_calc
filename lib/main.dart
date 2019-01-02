@@ -34,7 +34,7 @@ class MainHomePage extends StatefulWidget {
 }
 
 class _MainHomePageState extends State<MainHomePage> {
-  double _fontsize = 20;
+  double _fontsize = 25;
   double _userSadaka = 0;
   double _sadakaECT = 0;
   double _sadakaKanisani = 0;
@@ -66,9 +66,9 @@ class _MainHomePageState extends State<MainHomePage> {
   // Card decorations
   BoxDecoration _decorateCard() {
     return BoxDecoration(
-      color: Colors.white,
+      color: Colors.grey[100],
       border: Border.all(color: Colors.blueAccent),
-      borderRadius: BorderRadius.circular(10.0),
+      borderRadius: BorderRadius.circular(20.0),
 
       boxShadow: [
         BoxShadow(
@@ -90,12 +90,6 @@ class _MainHomePageState extends State<MainHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       // To avoid 'Bottom overflowed by xyz pixels' error message
       // Consider using one of scrolling widgets, e.g. ListView,
@@ -107,6 +101,7 @@ class _MainHomePageState extends State<MainHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
+
       body: Center(
         child: Container(
           margin: EdgeInsets.all(10.0),
@@ -139,6 +134,7 @@ class _MainHomePageState extends State<MainHomePage> {
                         margin: EdgeInsets.only(left: 40, right: 40),
                         child: TextField(
                           autofocus: true,
+                          textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                           controller: inputController,
 
