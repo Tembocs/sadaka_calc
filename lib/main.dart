@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(SadakaCalc());
 
@@ -10,7 +11,7 @@ class SadakaCalc extends StatelessWidget {
       title: 'Kokotoa Mgawanyo',
       theme: ThemeData(
 
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
 //        textTheme: TextTheme(
 //          display1: TextStyle(
 //            color: Colors.black,
@@ -34,7 +35,7 @@ class MainHomePage extends StatefulWidget {
 }
 
 class _MainHomePageState extends State<MainHomePage> {
-  double _fontsize = 25;
+  double _fontsize = 28;
   double _userSadaka = 0;
   double _sadakaECT = 0;
   double _sadakaKanisani = 0;
@@ -90,6 +91,9 @@ class _MainHomePageState extends State<MainHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // To prevention rotation of the app when does rotate the device.
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
     return Scaffold(
       // To avoid 'Bottom overflowed by xyz pixels' error message
       // Consider using one of scrolling widgets, e.g. ListView,
@@ -100,6 +104,9 @@ class _MainHomePageState extends State<MainHomePage> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
+        leading: Icon(
+          Icons.equalizer,
+        ),
       ),
 
       body: Center(
@@ -213,7 +220,7 @@ class _MainHomePageState extends State<MainHomePage> {
                         Container(
                           margin: EdgeInsets.all(10),
                           child: Text(
-                            "Kanisani (42)",
+                            "Kanisani (42%)",
                             style: TextStyle(
                               fontSize: _fontsize
                             ),
