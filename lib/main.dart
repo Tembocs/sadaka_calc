@@ -63,6 +63,13 @@ class _MainHomePageState extends State<MainHomePage> {
     });
   }
 
+  // Add thousands separator
+  String _separateThousands(String value) {
+    RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+    Function mathFunc = (Match match) => '${match[1]},';
+    return value.replaceAllMapped(reg, mathFunc);
+  }
+
   // Card decorations
   BoxDecoration _decorateCard() {
     return BoxDecoration(
@@ -168,7 +175,7 @@ class _MainHomePageState extends State<MainHomePage> {
               ),
 
               Expanded(
-                // Second card with TextFormField
+                // Second card with Text
                 child: Container(
                     margin: const EdgeInsets.all(10.0),
                     //color: Colors.lightBlueAccent,
@@ -191,7 +198,7 @@ class _MainHomePageState extends State<MainHomePage> {
 
                         Container(
                           child: Text(
-                            '${_sadakaECT.toStringAsFixed(1)}',
+                            '${_separateThousands(_sadakaECT.toStringAsFixed(1))}',
                             style: TextStyle(
                               fontSize: _fontsize
                             ),
@@ -204,7 +211,7 @@ class _MainHomePageState extends State<MainHomePage> {
               ),
 
               Expanded(
-                // Third card with TextFormField
+                // Third card with Text
                 child: Container(
                     margin: const EdgeInsets.all(10.0),
                     //color: Colors.lightBlueAccent,
@@ -227,7 +234,7 @@ class _MainHomePageState extends State<MainHomePage> {
 
                         Container(
                             child: Text(
-                              '${_sadakaKanisani.toStringAsFixed(1)}',
+                              '${_separateThousands(_sadakaKanisani.toStringAsFixed(1))}',
                               style: TextStyle(
                                 fontSize: _fontsize
                               ),
