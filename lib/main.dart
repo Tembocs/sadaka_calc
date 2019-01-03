@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 
 void main() => runApp(SadakaCalc());
 
@@ -50,17 +51,15 @@ class _MainHomePageState extends State<MainHomePage> {
 
   void _calculateSadakaPercentage() {
     setState(() {
-      _userSadaka = double.parse(inputController.text);
+      // So that when there is nothing we have 0 as a value internally
+      if (inputController.text == '') {
+        _userSadaka = 0;
+      } else {
+        _userSadaka = double.parse(inputController.text);
+      }
+
       _sadakaECT = _userSadaka * 0.58;
       _sadakaKanisani = _userSadaka * 0.42;
-    });
-  }
-
-  void _clearSadakaPercentage() {
-    // When we clear the input field this be called
-    setState(() {
-          _sadakaECT = 0;
-          _sadakaKanisani = 0;
     });
   }
 
@@ -91,7 +90,7 @@ class _MainHomePageState extends State<MainHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // To prevention rotation of the app when does rotate the device.
+    // To prevention rotation of the app when user rotate the device.
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
     return Scaffold(
@@ -156,7 +155,6 @@ class _MainHomePageState extends State<MainHomePage> {
 
                               onPressed: () {
                                 inputController.clear();
-                                _clearSadakaPercentage();
                               }
                             )
                           )
