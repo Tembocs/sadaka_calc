@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:zaka/input_formatter.dart';
 
 void main() => runApp(SadakaCalc());
 
@@ -41,6 +41,8 @@ class _MainHomePageState extends State<MainHomePage> {
   double _sadakaECT = 0;
   double _sadakaKanisani = 0;
   final inputController = TextEditingController();
+  final _thousandSeparatorFormatter = NumericTextFormatter();
+//  final _thousandSeparatorFormatter = ThousandSeparatorTextInputFormatter();
 
   @override
   void dispose() {
@@ -51,11 +53,13 @@ class _MainHomePageState extends State<MainHomePage> {
 
   void _calculateSadakaPercentage() {
     setState(() {
-      // So that when there is nothing we have 0 as a value internally
+      // To ensure valid calculation
       if (inputController.text == '') {
         _userSadaka = 0;
       } else {
-        _userSadaka = double.parse(inputController.text);
+        // To avoid 'invalid double' error
+        var inputText = inputController.text.replaceAll(RegExp(r','), '');
+        _userSadaka = double.parse(inputText);
       }
 
       _sadakaECT = _userSadaka * 0.58;
@@ -150,6 +154,9 @@ class _MainHomePageState extends State<MainHomePage> {
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                           controller: inputController,
+                          inputFormatters: <TextInputFormatter>[
+                            _thousandSeparatorFormatter,
+                          ],
 
                           style: TextStyle(
                             color: Colors.black,
