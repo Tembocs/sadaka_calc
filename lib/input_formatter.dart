@@ -13,7 +13,7 @@ class NumericTextFormatter extends TextInputFormatter {
       return TextEditingValue(
           selection: newValue.text.length > oldValue.text.length
               ? TextSelection.fromPosition(
-              TextPosition(offset: newString.length))
+                  TextPosition(offset: newString.length))
               : newValue.selection,
           text: newString);
     } else {
@@ -25,8 +25,7 @@ class NumericTextFormatter extends TextInputFormatter {
 class ThousandSeparatorTextInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue,
-      TextEditingValue newValue) {
+      TextEditingValue oldValue, TextEditingValue newValue) {
     // So that we have thousand comma separator
     print("Before: ${newValue.text}");
     String createdText = newValue.text;
@@ -34,8 +33,10 @@ class ThousandSeparatorTextInputFormatter extends TextInputFormatter {
     print("After: -> $createdText");
 
     return TextEditingValue(
-      selection: TextSelection.fromPosition(TextPosition(offset: createdText.length)),
-      text: _addThousandsSeparator(createdText));
+      selection:
+          TextSelection.fromPosition(TextPosition(offset: createdText.length)),
+      text: _addThousandsSeparator(createdText),
+    );
   }
 
   String _addThousandsSeparator(String value) {
